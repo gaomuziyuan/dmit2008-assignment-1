@@ -2712,33 +2712,6 @@ function StockDisplay(displayClass) {
       document.querySelector(displayClass).insertAdjacentHTML('afterbegin', _elem);
     }
   };
-
-  this.renderStock = function (stockData) {
-    var _this = this;
-
-    // if there are no stocks in the results
-    this.removeChildElements();
-
-    if (stockData.results.length === 0) {
-      var elem = _ejs.default.render(noResultsView);
-
-      this.container.insertAdjacentHTML("afterbegin", elem);
-    } // search returns results
-
-
-    if (people.results !== 0) {
-      //this.removeChildElements();
-      people.results.forEach(function (person) {
-        console.log(person);
-
-        var elem = _ejs.default.render(personView, {
-          person: person
-        });
-
-        _this.container.insertAdjacentHTML("afterbegin", elem);
-      });
-    }
-  };
 }
 },{"ejs":"../node_modules/ejs/lib/ejs.js"}],"js/controllers/display-controller.js":[function(require,module,exports) {
 "use strict";
@@ -2826,7 +2799,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "4372" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5522" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

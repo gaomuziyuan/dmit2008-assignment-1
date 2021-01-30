@@ -30,8 +30,6 @@ function StockDisplay(displayClass) {
         }
         else {const elem = ejs.render(stockDisplay, {stockData});
         document.querySelector(displayClass).insertAdjacentHTML('afterbegin', elem);}
-        
-        
     }
 }
 
