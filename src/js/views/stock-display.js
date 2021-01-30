@@ -33,25 +33,6 @@ function StockDisplay(displayClass) {
         
         
     }
-
-    this.renderStock = function (stockData) {
-        // if there are no stocks in the results
-        this.removeChildElements();
-        if (stockData.results.length === 0) {
-          const elem = ejs.render(noResultsView);
-          this.container.insertAdjacentHTML("afterbegin", elem);
-        }
-        
-        // search returns results
-        if (people.results !== 0) {
-          //this.removeChildElements();
-          people.results.forEach((person) => {
-            console.log(person);
-            const elem = ejs.render(personView, { person });
-            this.container.insertAdjacentHTML("afterbegin", elem);
-          });
-        }
-      };
 }
 
 export {StockDisplay}
