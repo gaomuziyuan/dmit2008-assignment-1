@@ -5,6 +5,7 @@ function DisplayController(model, stockDisplay) {
         const data = await this.model.init();
         this.stockDisplay.configUI(data['Global Quote']);
     }
+    return this;
 }
 
 export {DisplayController};

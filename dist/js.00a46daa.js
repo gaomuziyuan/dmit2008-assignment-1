@@ -2699,19 +2699,34 @@ var stockDisplay = "\n<aside class=\"stock\">\n  <header>\n    <h3 class=\"name\
 var noResultsView = "\n<aside class=\"error\">\n  <header>\n    <h3> There are no results matching this search</h3>\n <header>\n</aside>";
 
 function StockDisplay(displayClass) {
+  this.container = document.querySelector(displayClass);
+
+  this.removeAllChildren = function () {
+    var _this = this;
+
+    var messages = this.container.querySelectorAll('aside');
+    messages.forEach(function (stockData) {
+      _this.container.removeChild(stockData);
+    });
+  };
+
   this.configUI = function (stockData) {
+    this.removeAllChildren();
+
     if (Object.keys(stockData).length == 0) {
       var elem = _ejs.default.render(noResultsView);
 
-      document.querySelector(displayClass).insertAdjacentHTML('afterbegin', elem);
+      this.container.insertAdjacentHTML('afterbegin', elem);
     } else {
       var _elem = _ejs.default.render(stockDisplay, {
         stockData: stockData
       });
 
-      document.querySelector(displayClass).insertAdjacentHTML('afterbegin', _elem);
+      this.container.insertAdjacentHTML('afterbegin', _elem);
     }
   };
+
+  return this;
 }
 },{"ejs":"../node_modules/ejs/lib/ejs.js"}],"js/controllers/display-controller.js":[function(require,module,exports) {
 "use strict";
@@ -2750,6 +2765,7 @@ function DisplayController(model, stockDisplay) {
       }
     }, _callee, this);
   }));
+  return this;
 }
 },{"@babel/runtime/regenerator":"../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../node_modules/@babel/runtime/helpers/asyncToGenerator.js"}],"js/index.js":[function(require,module,exports) {
 "use strict";
@@ -2761,16 +2777,15 @@ var _stockDisplay = require("./views/stock-display.js");
 var _displayController = require("./controllers/display-controller.js");
 
 // import {getRequest} from './fetch/get-requests.js';
-var btn = document.querySelector('#makeRequest');
-
-btn.onclick = function (e) {
+var search = document.querySelector('#search');
+search.addEventListener('submit', function (e) {
   e.preventDefault();
   var stockSymbol = document.querySelector('#searchTerm').value;
   var model = new _swapiModel.SwapiModel(stockSymbol);
   var stockDisplay = new _stockDisplay.StockDisplay('.stock-display');
   var displayController = new _displayController.DisplayController(model, stockDisplay);
   displayController.configUI();
-};
+});
 },{"./models/swapi-model.js":"js/models/swapi-model.js","./views/stock-display.js":"js/views/stock-display.js","./controllers/display-controller.js":"js/controllers/display-controller.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -2799,7 +2814,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5522" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9735" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -23,14 +23,25 @@ const noResultsView = `
 </aside>`;
 
 function StockDisplay(displayClass) {
-    this.configUI = function(stockData){
-        if(Object.keys(stockData).length == 0) {
-            const elem = ejs.render(noResultsView);
-            document.querySelector(displayClass).insertAdjacentHTML('afterbegin', elem);
-        }
-        else {const elem = ejs.render(stockDisplay, {stockData});
-        document.querySelector(displayClass).insertAdjacentHTML('afterbegin', elem);}
+  this.container = document.querySelector(displayClass);
+  this.removeAllChildren = function () {
+    let messages = this.container.querySelectorAll('aside');
+    messages.forEach((stockData) => {
+      this.container.removeChild(stockData);
+    })
+  }
+  this.configUI = function (stockData) {
+    this.removeAllChildren();
+    if (Object.keys(stockData).length == 0) {
+      const elem = ejs.render(noResultsView);
+      this.container.insertAdjacentHTML('afterbegin', elem);
     }
+    else {
+      const elem = ejs.render(stockDisplay, { stockData });
+      this.container.insertAdjacentHTML('afterbegin', elem);
+    }
+  }
+  return this;
 }
 
-export {StockDisplay}
+export { StockDisplay }
